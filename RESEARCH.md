@@ -51,3 +51,18 @@ Two examples were Maps API integration to calculate commuting distance and trave
 Both could reduce manual data entry, but they would also introduce external APIs, additional error handling and more complexity without changing the core comparison problem I wanted to demonstrate.
 
 I therefore kept these as natural future improvements rather than dependencies of the MVP.
+
+## Moving the model into code
+
+Once the spreadsheet model was sufficiently defined, I started translating its structure into code.
+I deliberately did not start with the user interface. I first wanted to create a technical foundation for the calculation engine: a consistent data model for jobs and working conditions, a separate set of calculation rules and assumptions, and small calculation functions responsible for individual parts of the model.
+
+The spreadsheet remained my reference model during this process. The aim was not simply to reproduce spreadsheet cells in TypeScript, but to turn the same underlying rules into a calculation engine that could later be tested independently and used by the application.
+This also gave me a way to develop the project incrementally: first define how the data should be represented, then implement the rules and calculations, verify the results against the reference scenarios, and only after that build the user interface around the engine.
+
+## Resolving ambiguous product rules
+
+Before implementing the data model in TypeScript, I used ChatGPT to work through cases where the spreadsheet alone did not fully define how the application should behave.
+I treated these discussions as product and modelling decisions rather than asking AI to choose the rules automatically. We worked through questions such as the difference between advertised and expected actual working hours, hourly and daily pay, self-employed revenue and expenses, commute fuel versus fuel used while performing a job, ownership of calculated values, and what should happen when an existing job or the current baseline is edited.
+For each case I decided which behaviour made sense for the product and then incorporated the agreed rule into the data model. The model was revised as these decisions became clearer before I started implementing the calculation engine.
+This step was important because it converted assumptions that could otherwise remain implicit in a spreadsheet into explicit rules that could be implemented and tested in code.

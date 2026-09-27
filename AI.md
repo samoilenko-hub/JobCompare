@@ -17,3 +17,10 @@ I used ChatGPT to explore how the spreadsheet model could be turned into a user-
 I described the problem, the comparison outputs and the value I wanted the product to provide, and asked ChatGPT to help visualise a more complete version of the experience. I used AI-generated interface concepts to explore how the key benefits could be presented to the user, including side-by-side job comparison, money and time trade-offs, work patterns and a possible personalised pros-and-cons view.
 
 These concepts were exploratory rather than a specification for the final application. I used them to understand the broader product opportunity and then decide which parts were actually necessary for the technical challenge.
+
+## Using AI to clarify product rules
+I also used ChatGPT to identify ambiguities in the model before implementing it in code.
+Rather than asking ChatGPT to generate the application from a vague description, I used a question-and-answer process to work through how individual parameters should behave. ChatGPT helped identify cases where a rule was not sufficiently defined and presented questions or possible interpretations for me to consider.
+These discussions included advertised versus actual working hours, hourly and daily pay, employed versus self-employed calculations, deductible expenses, commute fuel versus fuel used while performing the job, missing or optional values, a not-working baseline, and how editing source inputs should trigger recalculation.
+I made the product decisions based on the behaviour I wanted the application to have, and the agreed decisions were then incorporated into the data model and later implemented in TypeScript.
+This was one of the main ways I used AI in the project: not only to help write code, but to expose ambiguous assumptions before they became implementation problems.
