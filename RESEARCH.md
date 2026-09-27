@@ -35,3 +35,19 @@ I wanted these scenarios to give me known inputs and expected outputs before I m
 ## Exploring the product idea
 
 After validating the basic calculation model, I explored what a more complete version of the product could look like and created interface concepts before deciding what belonged in the challenge MVP.
+
+## Defining the MVP scope
+
+The initial product concept was broader than I needed for the technical challenge, so I prioritised the features according to whether they were necessary to demonstrate the core idea.
+
+For the MVP I decided to focus on the complete comparison path: capturing the user's current situation and candidate jobs, normalising different pay structures and working patterns, accounting for commute and work-related costs, and producing comparable financial and time outputs. The core journey therefore became:
+
+user input → calculation engine → comparison
+
+I deliberately left features that were not necessary to prove this journey outside the MVP.
+
+Two examples were Maps API integration to calculate commuting distance and travel time automatically, and AI-assisted job advert parsing to extract available information such as employer, role, pay, working hours, schedule and location and use it to pre-fill the comparison form for user verification.
+
+Both could reduce manual data entry, but they would also introduce external APIs, additional error handling and more complexity without changing the core comparison problem I wanted to demonstrate.
+
+I therefore kept these as natural future improvements rather than dependencies of the MVP.
