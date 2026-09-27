@@ -66,3 +66,10 @@ Before implementing the data model in TypeScript, I used ChatGPT to work through
 I treated these discussions as product and modelling decisions rather than asking AI to choose the rules automatically. We worked through questions such as the difference between advertised and expected actual working hours, hourly and daily pay, self-employed revenue and expenses, commute fuel versus fuel used while performing a job, ownership of calculated values, and what should happen when an existing job or the current baseline is edited.
 For each case I decided which behaviour made sense for the product and then incorporated the agreed rule into the data model. The model was revised as these decisions became clearer before I started implementing the calculation engine.
 This step was important because it converted assumptions that could otherwise remain implicit in a spreadsheet into explicit rules that could be implemented and tested in code.
+
+
+## Planning the calculation engine
+Before implementing the calculation functions, I created a calculation engine plan based on the data model and the spreadsheet reference cases.
+I broke the calculation process into smaller responsibilities such as pay normalisation, Income Tax, National Insurance, commuting costs, additional work costs, working time and job comparison. The intention was to keep these calculations separate from the user interface so that the engine could be understood and tested independently.
+I also defined how recalculation should work when source data changes. Calculated values would not be edited directly. Instead, editing a job or the current situation would update the source inputs and run the same calculation functions again. Changing the current baseline would therefore recalculate its comparison with every candidate job.
+This planning step gave me a clearer structure for translating the spreadsheet model into small TypeScript modules rather than reproducing the spreadsheet as one large calculation.
