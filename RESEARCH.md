@@ -20,6 +20,8 @@ The spreadsheet helped me separate the problem into three parts:
 
 I started by defining the outputs I wanted the comparison to show and then worked backwards to identify the inputs and rules required to calculate them.
 
+As the spreadsheet developed, I also started to formalise product rules that were not purely financial, including shift time categories, weekday and weekend definitions, additional cost handling and assumptions for specific job scenarios. This allowed me to test parts of the product logic before implementing them in code.
+
 This separation later became the basis for the application's data model and calculation engine.
 
 ## Creating a reference model
