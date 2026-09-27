@@ -31,3 +31,7 @@ Once the spreadsheet calculations were working, I kept a set of deliberately dif
 They included different pay bases, employed and self-employed work, full-time and part-time roles, different commuting methods and additional work costs.
 
 I wanted these scenarios to give me known inputs and expected outputs before I moved the calculations into code. This gave me something independent to compare the TypeScript implementation against.
+
+## Exploring the product idea
+
+After validating the basic calculation model, I explored what a more complete version of the product could look like and created interface concepts before deciding what belonged in the challenge MVP.
