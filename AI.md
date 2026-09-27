@@ -37,3 +37,21 @@ I used ChatGPT as a learning and development assistant while translating my spre
 I made the product and modelling decisions about what the application needed to represent and calculate, while ChatGPT helped me translate those decisions into a technical structure and working TypeScript implementation. I also used it to explain generated code and unfamiliar concepts so that I could understand how the different parts of the calculation engine worked together.
 I used AI suggestions as something to validate rather than as an authoritative answer. The spreadsheet remained an independent reference model containing deliberately different job scenarios and expected results. I used those scenarios to check the TypeScript calculation engine and investigate differences between the two implementations rather than assuming that generated code was correct because it compiled or ran successfully.
 I also used ChatGPT to discuss architectural scope, including whether the MVP required persistent storage. I decided not to introduce a database because persistence was not necessary to demonstrate the core calculation and comparison journey and would have added complexity outside the main purpose of the technical challenge.
+
+## Setting up the application and verifying the calculation engine
+
+I used ChatGPT extensively while setting up the React, TypeScript and Vite application around the existing calculation engine.
+
+As this application structure and development environment were new to me, I used ChatGPT not only to help generate code but also to understand what I was installing and why it was needed. This included understanding the roles of Node.js and npm, React, TypeScript and Vite, the purpose of the main project configuration files, and how the React application could use the existing TypeScript calculation modules without moving the calculation logic into the user interface.
+
+During the initial environment setup, I encountered a problem because Node.js and npm were not installed on my machine. I used ChatGPT to troubleshoot this and initially tried installing Node.js through Homebrew. This began pulling in and building a large number of dependencies and was taking much longer than I expected for what should have been a relatively simple setup step.
+
+Rather than continuing with the suggested approach automatically, I questioned whether that level of complexity was necessary for the task. I stopped that installation path and used the official Node.js installer instead, which provided Node.js and npm directly. I was then able to install the project dependencies and run the React, TypeScript and Vite application normally.
+
+This was a useful example of where an AI-suggested technical approach was possible but was not the most appropriate approach for my situation. When the behaviour did not look proportionate to the problem, I reconsidered the suggestion and chose a simpler solution rather than continuing to follow it automatically.
+
+Once the application environment was working, I used ChatGPT to help connect the predefined reference scenarios to the application and create a simple reference-check screen. The purpose of this screen was not to build the final user interface, but to pass the existing reference inputs through the calculation and comparison functions and make the resulting values easy to compare with my spreadsheet reference model.
+
+I did not treat the AI-assisted implementation as evidence that the calculations were correct. I used the spreadsheet model as an independent reference and compared the application results against the expected outputs for all eight predefined job scenarios. The displayed results matched the spreadsheet reference values at the displayed rounding precision.
+
+I also ran the TypeScript compiler validation and Vite production build successfully before continuing with the full user interface.

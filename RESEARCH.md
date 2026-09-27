@@ -81,3 +81,19 @@ Based on this classification, I designed the TypeScript implementation around se
 I chose this modular structure because I wanted the calculation logic to remain independent from the user interface and easier to understand, verify, change and extend as the product developed. For example, a future change to a tax rule or commuting calculation should not require rewriting the user interface or unrelated parts of the calculation engine.
 I also converted the deliberately different spreadsheet scenarios into reference job data that the calculation engine could process. This created a bridge between the original spreadsheet model and the TypeScript implementation and gave me known scenarios that I could use to verify the engine before building the user interface.
 I deliberately did not introduce a database for the MVP. Persistent storage was not necessary to demonstrate the core path of user input → calculation engine → comparison output. For the technical challenge, keeping the entered data in application state was sufficient and avoided introducing a persistence layer, additional integration and error handling that would not help validate the main calculation problem. Saving user scenarios and job comparisons would be a natural extension for a production version.
+
+
+
+## Setting up the application and verifying the calculation engine
+
+Once the calculation engine had been implemented, I set up the application environment using React, TypeScript and Vite.
+
+I kept the calculation engine separate from the React user interface. React would be responsible for collecting and presenting information, while the existing TypeScript calculation modules would remain responsible for processing the job data.
+
+Before building the full user interface, I wanted to verify that the calculation engine produced the expected results. I therefore connected the predefined reference job scenarios to the application and created a simple reference-check screen.
+
+Each reference job was processed through the same calculation functions that would later be used by the application. Candidate jobs were also compared with the current job baseline using the comparison engine. I displayed the results in a table structured similarly to the spreadsheet reference model, including gross monthly income, real net monthly income, total weekly time, effective net income per hour and the differences against the current situation.
+
+I then compared the calculated results with the expected results from the spreadsheet reference model. The displayed values for all eight reference scenarios matched the spreadsheet values at the displayed rounding precision.
+
+Finally, I ran npm run build, which performed TypeScript validation (tsc --noEmit) followed by a Vite production build. Both completed successfully. Together with the reference-scenario comparison, this gave me confidence that the calculation engine and application setup were working correctly before I started building the full user interface.
