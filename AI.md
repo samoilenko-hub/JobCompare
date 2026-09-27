@@ -7,3 +7,5 @@ I used it as a research, learning and development assistant from the early model
 ## Research and problem modelling
 
 I used ChatGPT to help research and understand the rules needed for the initial spreadsheet model and to discuss how those rules should be translated into calculations and formulas."
+
+I also used ChatGPT to help research UK Income Tax and National Insurance rules, different employment and pay structures, work-related costs, commuting assumptions and the normalisation of weekly, monthly and annual values. I used it to help build and review formulas in the spreadsheet. External rules were treated as assumptions to verify rather than facts to accept simply because AI suggested them.
