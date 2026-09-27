@@ -55,3 +55,22 @@ Once the application environment was working, I used ChatGPT to help connect the
 I did not treat the AI-assisted implementation as evidence that the calculations were correct. I used the spreadsheet model as an independent reference and compared the application results against the expected outputs for all eight predefined job scenarios. The displayed results matched the spreadsheet reference values at the displayed rounding precision.
 
 I also ran the TypeScript compiler validation and Vite production build successfully before continuing with the full user interface.
+
+
+## Using AI to formalise the functional requirements
+
+I used ChatGPT extensively to help formalise the functional requirements before building the full user interface.
+
+By this stage, many of the rules already existed in the spreadsheet model, data model and calculation engine. I used ChatGPT to review those decisions, identify ambiguous cases and help turn them into explicit product behaviour.
+
+The process was conversational rather than asking AI to generate a specification from a blank prompt. I described how I wanted the product to behave, and ChatGPT helped me identify questions and dependencies that needed a clear decision. These discussions included pay bases, advertised versus actual hours, shifts and working days, employed versus self-employed calculations, commuting, additional expenses, delivery-route fuel, missing values, work patterns, editing and recalculation.
+
+This was useful because some inputs affect several parts of the model. For example, shifts per week can affect daily pay, commute frequency, parking and workday-based costs. Similarly, treating an unknown value as zero could make a calculation appear complete while changing the result.
+
+I also used ChatGPT to explore the personalised comparison concept, including priorities, preferences, experience, career direction and Pros & Cons. I decided not to combine these into an overall job score. Personalisation could highlight relevant matches and trade-offs, but the application should not decide which job is best for the user.
+
+ChatGPT also helped me challenge the scope of the MVP. We discussed features such as public transport calculations, maps integration, vacancy parsing, AI extraction and persistent storage. I decided to keep these outside the core MVP where they would require additional data sources or infrastructure without being necessary to demonstrate the main comparison journey.
+
+I did not treat AI-generated suggestions as requirements automatically. I checked the proposed behaviour against the spreadsheet model, the TypeScript data structures and the calculation engine, and made the final product decisions where alternatives existed.
+
+Once these requirements were explicit, I could use them together with the existing data model to design the user flow and decide which information should be collected on each screen.

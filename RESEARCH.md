@@ -97,3 +97,22 @@ Each reference job was processed through the same calculation functions that wou
 I then compared the calculated results with the expected results from the spreadsheet reference model. The displayed values for all eight reference scenarios matched the spreadsheet values at the displayed rounding precision.
 
 Finally, I ran npm run build, which performed TypeScript validation (tsc --noEmit) followed by a Vite production build. Both completed successfully. Together with the reference-scenario comparison, this gave me confidence that the calculation engine and application setup were working correctly before I started building the full user interface.
+
+
+## Formalising the functional requirements
+
+After verifying the calculation engine against the spreadsheet reference scenarios, I formalised the functional requirements before building the full user interface.
+
+Many of the underlying rules already existed in the spreadsheet, data model and calculation engine, but they had been developed at different stages of the project. I wanted a single description of how the product should behave from the user's point of view before translating those rules into screens and forms.
+
+This included defining how different pay bases should be handled, keeping advertised/paid hours separate from expected actual hours, distinguishing shifts from stated working days, and clarifying the different treatment of employed and self-employed work. I also formalised the distinction between commuting and additional work costs, including the case of delivery work where travelling from home to a depot and driving a delivery route are two separate costs.
+
+Another important requirement was the distinction between a known zero and missing data. For example, free parking is genuinely £0, while unknown parking cost is missing information. I did not want the application to silently replace missing inputs with zero where doing so could materially change the result.
+
+I defined the compact comparison around seven primary metrics: Estimated Gross per Month, Real Net per Month, Income Difference versus Current, Total Time per Week, Time Difference versus Current, Effective Net per Hour and Work Pattern. More detailed calculations could remain available separately.
+
+I also explored a personalised comparison layer based on priorities, job preferences, experience and career direction. I decided that these should produce individual Pros & Cons and priority matches rather than an overall score or a recommendation of a single "best" job. The purpose of the product is to expose relevant trade-offs rather than make the decision for the user.
+
+Finally, I used the requirements to define the MVP boundary. Manual job entry would be the reliable input path. Features such as vacancy parsing, AI extraction, maps integration, public transport calculations, accounts and backend storage were left as future extensions rather than adding complexity before the core comparison journey was working.
+
+With the functional behaviour defined more explicitly, the next step was to design the user flow: deciding how the required source inputs should be divided into screens and collected in a manageable sequence.
