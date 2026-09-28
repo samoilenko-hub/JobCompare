@@ -244,6 +244,13 @@ function App() {
         onRemoveJob={(jobId) =>
           setUserJobs(userJobs.filter((job) => job.id !== jobId))
         }
+        onUpdateJob={(updatedJob) =>
+          setUserJobs(
+            userJobs.map((job) =>
+              job.id === updatedJob.id ? updatedJob : job,
+            ),
+          )
+        }
         onEditCurrent={() => setScreen('current-situation')}
       />
     )

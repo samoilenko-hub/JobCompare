@@ -163,3 +163,21 @@ I manually tested the complete flow by adding multiple candidate jobs. A fully c
 At this stage the core MVP journey was working end to end: enter the current situation, add alternative jobs, calculate each option consistently and compare the results in one view.
 
 There is some duplication between the React forms used for the current job and candidate jobs. A future refactoring could consolidate these into reusable form components. I deliberately left this outside the current scope because the underlying Job model, adapter and calculation engine are already shared, and completing and verifying the MVP was a higher priority than refactoring working UI code.
+
+## End-to-end verification against the reference model
+
+With the complete manual input and comparison flow working, I performed a second level of verification against the spreadsheet reference model.
+
+During development I had created several temporary candidate jobs while testing the forms and comparison screen. I first added a simple Remove action so these test entries could be cleared and the verification could start from a clean state.
+
+I then manually re-entered the current situation and all seven candidate jobs from the reference set through the application's normal input screens. This was intentionally different from the earlier calculation-engine verification, which had processed predefined Job objects directly. This time I wanted to test the complete user-facing path:
+
+user input → form state → Job model → calculation engine → comparison output
+
+I compared the resulting outputs with the spreadsheet reference values. The first pass exposed several discrepancies in the manually entered source data for the PKL, XYZ and One Stop scenarios. Investigating these differences was useful because it demonstrated that the calculation engine itself was producing consistent results, while also revealing a practical usability problem: correcting an existing candidate required re-entering the job.
+
+I therefore added an Edit action to the Comparison view. The edit modal allows the source inputs of an existing candidate job to be changed and then passes the updated Job through the same calculation path again. Calculated outputs remain derived values rather than editable fields.
+
+Using Edit, I corrected the source inputs for the affected PKL, XYZ and One Stop scenarios and repeated the comparison. After those corrections, the outputs for the manually entered current situation and all seven candidate jobs matched the spreadsheet reference outputs at the displayed rounding precision.
+
+This completed an end-to-end verification of the MVP using the same manual input path available to a user. It also produced a verified set of source inputs that can now be reused as demo data without bypassing or changing the underlying calculation logic.

@@ -1,4 +1,4 @@
-"# AI Usage
+# AI Usage
 
 I used ChatGPT extensively throughout this project, not only for generating code.
 
@@ -6,7 +6,7 @@ I used it as a research, learning and development assistant from the early model
 
 ## Research and problem modelling
 
-I used ChatGPT to help research and understand the rules needed for the initial spreadsheet model and to discuss how those rules should be translated into calculations and formulas."
+I used ChatGPT to help research and understand the rules needed for the initial spreadsheet model and to discuss how those rules should be translated into calculations and formulas.
 
 I also used ChatGPT to help research UK Income Tax and National Insurance rules, different employment and pay structures, work-related costs, commuting assumptions and the normalisation of weekly, monthly and annual values. I used it to help build and review formulas in the spreadsheet. External rules were treated as assumptions to verify rather than facts to accept simply because AI suggested them.
 
@@ -113,3 +113,19 @@ During the integration, the TypeScript build identified an incorrect property na
 I then manually tested the complete flow with multiple jobs. I checked that a fully completed candidate produced Gross Pay, Real Net, total time, effective net income per hour and work-pattern results. I also verified that the displayed Real Net difference matched the candidate result minus the current baseline. An incompletely entered candidate displayed No data where the calculation did not have sufficient source information rather than silently treating missing values as zero.
 
 This stage reinforced the way I used AI throughout the project: AI helped generate and connect code, but I used the type system, builds, the existing data model and manual calculations to understand and verify the result before accepting it.
+
+## Using AI during end-to-end reference verification
+
+After the manual input and candidate comparison flow was working, I used ChatGPT to help plan and investigate a full end-to-end verification against the spreadsheet reference model.
+
+We deliberately did not move directly to predefined demo data. I first cleared the temporary development candidates using the Remove action and manually entered the current situation and all seven reference candidate jobs through the application's normal UI.
+
+I then compared the application outputs with the spreadsheet reference values. Where the first results differed, I used ChatGPT to help trace the discrepancies back through the source inputs and calculation path rather than immediately changing the calculation engine.
+
+This investigation identified differences in the manually entered data for the PKL, XYZ and One Stop scenarios. It also exposed a usability issue: although jobs could be removed and re-entered, there was no convenient way to correct an existing candidate.
+
+I used ChatGPT to help implement an Edit modal that updates the source Job data while preserving the existing calculation architecture. The calculated outputs themselves remain derived values; changing a source input causes the job to be recalculated through the same calculation engine.
+
+I then used the Edit functionality to correct the affected source inputs and repeated the verification. After the corrections, the manually entered current situation and all seven candidate jobs matched the spreadsheet reference outputs at the displayed rounding precision.
+
+This stage was another example of how I used AI as a development and investigation tool rather than as the source of truth. The spreadsheet remained the independent reference, the application data was entered and checked through the user-facing flow, and discrepancies were investigated before code or calculations were changed.
