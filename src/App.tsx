@@ -104,6 +104,46 @@ function App() {
   })
 
   const [userJobs, setUserJobs] = useState<Job[]>([])
+  const [demoMode, setDemoMode] = useState(false)
+
+  const leaveDemoMode = () => {
+    if (!demoMode) return
+
+    setCurrentStatus('')
+    setCurrentJobDraft({
+      scheduleInputMode: 'hours',
+      position: '',
+      company: '',
+      location: '',
+      contractType: '',
+      payBasis: 'hour',
+      payAmount: '',
+      advertisedHoursPerWeek: '',
+      actualHoursPerWeek: '',
+      shiftsPerWeek: '',
+      workingDays: [],
+      startTime: '',
+      endTime: '',
+      shift: '',
+      commuteMethod: 'car',
+      commuteDistanceMiles: '',
+      commuteTimeMinutes: '',
+      parkingPerWorkday: '',
+      additionalWorkCosts: [],
+      routeFuelEnabled: false,
+      routeDistanceMilesPerWorkday: '',
+      routeFuelType: 'diesel',
+      routeFuelConsumptionLitresPer100Km: '',
+    })
+    setHomeTravelDraft({
+      homePostcode: '',
+      hasCar: false,
+      fuelType: 'diesel',
+      fuelConsumptionLitresPer100Km: '',
+    })
+    setUserJobs([])
+    setDemoMode(false)
+  }
 
   const currentJob =
     currentStatus === 'employed' || currentStatus === 'self_employed'
@@ -126,6 +166,7 @@ function App() {
     setCurrentJobDraft(structuredClone(demoCurrentJobDraft))
     setHomeTravelDraft(structuredClone(demoHomeTravelDraft))
     setUserJobs(structuredClone(demoJobs))
+    setDemoMode(true)
     setScreen('comparison')
   }
 
@@ -136,6 +177,11 @@ function App() {
         onStatusChange={setCurrentStatus}
         onLoadDemoData={loadDemoData}
         onContinue={() => {
+          if (demoMode) {
+            leaveDemoMode()
+            return
+          }
+
           setScreen(
             currentStatus === 'not_working'
               ? 'home-travel'
