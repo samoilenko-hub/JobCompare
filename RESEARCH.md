@@ -147,3 +147,19 @@ A Not Working baseline follows a separate path because there is no current Job t
 I manually tested both paths. For a working baseline I entered a complete example through the UI and checked that the descriptive information and calculated outputs reached the Comparison screen. I also tested the Not Working path and confirmed that it produced the intended zero baseline.
 
 This completed the current-situation side of the end-to-end path from user input to calculated output. The next step was to add candidate jobs and compare their results against this baseline.
+
+## Adding candidate jobs and comparison
+
+After completing the current baseline, I added the candidate-job flow so that the application could perform its main task: comparing alternative jobs against the user's current situation.
+
+The candidate flow collects job details, pay and schedule information, commute details and additional work costs. Home and vehicle information is not requested again because it belongs to the user rather than to an individual job.
+
+Candidate form data is converted through the same form-to-Job adapter and passed to the same calculation engine as the current job. The Comparison view can display multiple candidate jobs alongside the current baseline and shows their calculated gross pay, Real Net, total weekly time, effective net income per hour and work pattern.
+
+I also added comparison values for Real Net and total weekly time so that the user can see the financial and time difference relative to the current situation rather than comparing headline salary alone.
+
+I manually tested the complete flow by adding multiple candidate jobs. A fully completed candidate produced calculated results and differences against the current baseline. I also observed that an incomplete candidate propagated No data for calculations that could not be completed instead of silently treating missing inputs as zero.
+
+At this stage the core MVP journey was working end to end: enter the current situation, add alternative jobs, calculate each option consistently and compare the results in one view.
+
+There is some duplication between the React forms used for the current job and candidate jobs. A future refactoring could consolidate these into reusable form components. I deliberately left this outside the current scope because the underlying Job model, adapter and calculation engine are already shared, and completing and verifying the MVP was a higher priority than refactoring working UI code.

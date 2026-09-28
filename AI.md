@@ -99,3 +99,17 @@ ChatGPT helped me review the existing form-to-Job adapter and understand its rol
 I then used ChatGPT to help wire the adapter, calculation engine and Comparison screen into the React flow. Rather than assuming the integration worked because the application compiled, I entered a complete working example manually and checked that the form values produced calculated results in the Comparison view. I also tested the separate Not Working path and confirmed its zero baseline behaviour.
 
 This gave me an end-to-end check of the path from manually entered source data through the typed Job model and calculation engine to visible output before adding candidate jobs.
+
+## Using AI to add the candidate-job comparison flow
+
+I used ChatGPT extensively while implementing the candidate-job comparison flow, including generating and modifying React and TypeScript code.
+
+We compared the candidate forms with the current-job forms and identified that most of the information was structurally similar. I considered refactoring them into shared React components, but decided not to expand the scope at this stage. The underlying Job model, form-to-Job adapter and calculation engine are already shared, while consolidating the duplicated UI components can be treated as a later refactoring opportunity.
+
+ChatGPT helped me add the candidate screens, connect them to React state, reuse the existing form-to-Job adapter and calculation engine, and extend the Comparison view so that multiple candidate jobs could be displayed against the current baseline.
+
+During the integration, the TypeScript build identified an incorrect property name in AI-generated code for the job position. I inspected the canonical Job type, confirmed that the actual property was `position` rather than `positionTitle`, corrected the component and rebuilt the application successfully.
+
+I then manually tested the complete flow with multiple jobs. I checked that a fully completed candidate produced Gross Pay, Real Net, total time, effective net income per hour and work-pattern results. I also verified that the displayed Real Net difference matched the candidate result minus the current baseline. An incompletely entered candidate displayed No data where the calculation did not have sufficient source information rather than silently treating missing values as zero.
+
+This stage reinforced the way I used AI throughout the project: AI helped generate and connect code, but I used the type system, builds, the existing data model and manual calculations to understand and verify the result before accepting it.
