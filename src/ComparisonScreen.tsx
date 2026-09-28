@@ -53,6 +53,18 @@ const signedHours = (value: number | null) => {
   return `${prefix}${value.toFixed(1)} h / week`
 }
 
+const moneyDifferenceColour = (value: number | null) => {
+  if (value === null || value === 0) return 'inherit'
+  return value > 0 ? 'green' : 'red'
+}
+
+const timeDifferenceColour = (value: number | null) => {
+  if (value === null || value === 0) return 'inherit'
+  return value > 0 ? 'red' : 'green'
+}
+
+
+
 function contractLabel(job: Job) {
   const contract = job.contract
 
@@ -922,7 +934,14 @@ function ComparisonScreen({
                   <td key={job.id}>
                     <strong>{money(result.realNetMonthly)}</strong>
                     <div>/ month</div>
-                    <div>{signedMoney(difference)} vs current</div>
+                    <div
+                      style={{
+                        color: moneyDifferenceColour(difference),
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {signedMoney(difference)} vs current
+                    </div>
                   </td>
                 )
               })}
@@ -941,7 +960,14 @@ function ComparisonScreen({
 
                 return (
                   <td key={job.id}>
-                    {signedMoney(difference)} / month
+                    <span
+                      style={{
+                        color: moneyDifferenceColour(difference),
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {signedMoney(difference)} / month
+                    </span>
                   </td>
                 )
               })}
@@ -972,7 +998,14 @@ function ComparisonScreen({
                 return (
                   <td key={job.id}>
                     <strong>{hours(candidateTime)}</strong>
-                    <div>{signedHours(difference)} vs current</div>
+                    <div
+                      style={{
+                        color: timeDifferenceColour(difference),
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {signedHours(difference)} vs current
+                    </div>
                   </td>
                 )
               })}
