@@ -89,3 +89,13 @@ I did not rely on a successful code generation step as verification. I manually 
 
 This incremental process helped me understand how React state, typed form data and screen navigation worked together before connecting the completed input flow to the calculation engine.
 
+
+## Using AI to connect the current baseline to the calculation engine
+
+I used ChatGPT to help connect the completed current-situation forms to the calculation engine without moving calculation logic into the React screens.
+
+ChatGPT helped me review the existing form-to-Job adapter and understand its role as the boundary between UI-oriented form state and the canonical Job model used by the calculation engine. I checked that the adapter could represent the current form structure, including multiple additional work costs and route-fuel inputs, before using it for the current baseline.
+
+I then used ChatGPT to help wire the adapter, calculation engine and Comparison screen into the React flow. Rather than assuming the integration worked because the application compiled, I entered a complete working example manually and checked that the form values produced calculated results in the Comparison view. I also tested the separate Not Working path and confirmed its zero baseline behaviour.
+
+This gave me an end-to-end check of the path from manually entered source data through the typed Job model and calculation engine to visible output before adding candidate jobs.

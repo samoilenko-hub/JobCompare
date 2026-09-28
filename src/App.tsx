@@ -4,9 +4,19 @@ import CurrentJobScreen from './CurrentJobScreen'
 import CurrentPayScheduleScreen from './CurrentPayScheduleScreen'
 import HomeTravelScreen from './HomeTravelScreen'
 import CurrentCommuteCostsScreen from './CurrentCommuteCostsScreen'
+import ComparisonScreen from './ComparisonScreen'
+import { formToJob } from './adapters/formToJob_v3'
+import { calculateJob } from './calculations/calculateJob_v3'
+import { defaultRules } from './rules/defaultRules_v3'
 import type { CurrentJobDraft } from './types/formDraft_v3'
 
-type Screen = 'current-situation' | 'current-job' | 'current-pay-schedule' | 'home-travel' | 'current-commute-costs'
+type Screen =
+  | 'current-situation'
+  | 'current-job'
+  | 'current-pay-schedule'
+  | 'home-travel'
+  | 'current-commute-costs'
+  | 'comparison'
 
 type CurrentStatus =
   | 'employed'
@@ -52,6 +62,22 @@ function App() {
     fuelType: 'diesel',
     fuelConsumptionLitresPer100Km: '',
   })
+
+  const currentJob =
+    currentStatus === 'employed' || currentStatus === 'self_employed'
+      ? formToJob(
+          'current',
+          currentJobDraft,
+          homeTravelDraft,
+          currentStatus,
+          defaultRules,
+        )
+      : null
+
+  const currentResult =
+    currentJob === null
+      ? null
+      : calculateJob(currentJob, defaultRules)
 
   if (screen === 'current-situation') {
     return (
@@ -100,9 +126,11 @@ function App() {
           )
         }
         onContinue={() => {
-          if (currentStatus !== 'not_working') {
-            setScreen('current-commute-costs')
-          }
+          setScreen(
+            currentStatus === 'not_working'
+              ? 'comparison'
+              : 'current-commute-costs'
+          )
         }}
       />
     )
@@ -114,7 +142,18 @@ function App() {
         currentJobDraft={currentJobDraft}
         setCurrentJobDraft={setCurrentJobDraft}
         onBack={() => setScreen('home-travel')}
-        onContinue={() => {}}
+        onContinue={() => setScreen('comparison')}
+      />
+    )
+  }
+
+  if (screen === 'comparison') {
+    return (
+      <ComparisonScreen
+        currentJob={currentJob}
+        currentResult={currentResult}
+        currentStatus={currentStatus}
+        onEditCurrent={() => setScreen('current-situation')}
       />
     )
   }

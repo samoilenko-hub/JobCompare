@@ -133,3 +133,17 @@ I implemented the flow incrementally and manually checked each stage in the brow
 
 At this stage I had a working input path for the user's current situation. The next step was to connect that source data to the existing calculation engine and present the calculated baseline in the Comparison view.
 
+
+## Connecting the current baseline to the calculation engine
+
+Once the current-situation input flow was working, I connected the form data to the existing calculation engine.
+
+I added an adapter between the React form state and the canonical Job model. The forms keep values in a format that is convenient for data entry, while the calculation engine expects typed job data with structured pay, schedule, commute, vehicle and work-cost information. Keeping this conversion in a separate adapter allowed the calculation engine to remain independent from the user interface.
+
+For an employed or self-employed current situation, the application now converts the entered source data into a Job and passes it through the same calculation engine that had previously been verified against the spreadsheet reference scenarios. The resulting baseline displays monthly gross income, Real Net, total weekly time, effective net income per hour and work pattern.
+
+A Not Working baseline follows a separate path because there is no current Job to calculate. It is represented in the comparison as zero income and zero work-related time, with effective net income per hour not applicable.
+
+I manually tested both paths. For a working baseline I entered a complete example through the UI and checked that the descriptive information and calculated outputs reached the Comparison screen. I also tested the Not Working path and confirmed that it produced the intended zero baseline.
+
+This completed the current-situation side of the end-to-end path from user input to calculated output. The next step was to add candidate jobs and compare their results against this baseline.
