@@ -209,3 +209,21 @@ A second set of tests checks the seven candidate comparisons against the current
 The completed regression suite contains 15 tests and passes against the verified reference outputs. This provides a repeatable check that future changes to the calculation or comparison logic do not unintentionally change the results already validated against the spreadsheet model.
 
 The production build was also run successfully after adding the tests.
+
+## Improving comparison readability
+
+After validating the calculation logic and adding regression coverage, I improved the Comparison screen to make the results easier to interpret.
+
+The application already calculated differences against the current situation, including changes in Real Net, total weekly time and effective net income per hour. However, these differences were displayed as plain values, so the user still had to interpret whether a change represented a positive or negative trade-off.
+
+I added visual indicators to highlight the direction of each change.
+
+For financial differences:
+- positive values indicate an increase compared with the current situation;
+- negative values indicate a decrease.
+
+For time differences the interpretation is reversed:
+- additional committed time is highlighted as a negative trade-off;
+- reduced committed time is highlighted as a positive change.
+
+This reinforces the main purpose of JobCompare: comparing job options is not only about headline pay, but also about the amount of time and effort required to achieve that outcome.
