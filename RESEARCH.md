@@ -195,3 +195,17 @@ Home → Load demo data → completed Current + 7 job comparison
 The demo dataset contains the same current situation and seven candidate jobs that were manually entered, corrected and checked during the end-to-end reference verification. It is therefore based on verified source inputs rather than a separate set of values created only for presentation.
 
 The demo loading logic populates the normal application state and then opens the Comparison view. The existing calculation engine remains unchanged, and the normal manual input journey remains available alongside the demo path.
+
+## Adding automated regression testing
+
+After completing the manual end-to-end verification and capturing the verified demo dataset, I added a focused automated regression test for the calculation and comparison logic.
+
+The spreadsheet reference model remained the independent source of expected outputs. Rather than generating expected values from the application itself, I used the values that had already been checked during the spreadsheet and end-to-end verification stages.
+
+The Vitest regression suite covers all eight reference scenarios: the current situation and seven candidate jobs. For each scenario it checks key calculated outputs including monthly gross pay, Real Net, total weekly time, effective net income per hour and work pattern.
+
+A second set of tests checks the seven candidate comparisons against the current situation, including monthly income difference, weekly time difference and effective net income per hour difference. This is particularly important because the same numerical difference can have a different interpretation in the UI: additional income is positive, while additional work-related time is a trade-off.
+
+The completed regression suite contains 15 tests and passes against the verified reference outputs. This provides a repeatable check that future changes to the calculation or comparison logic do not unintentionally change the results already validated against the spreadsheet model.
+
+The production build was also run successfully after adding the tests.

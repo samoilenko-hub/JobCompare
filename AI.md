@@ -141,3 +141,15 @@ I temporarily exported the verified application state so that the exact current-
 ChatGPT helped me create a typed demo-data module and connect it to the existing React state. I added a Load demo data option to the initial Current Situation screen so that a reviewer can immediately inspect a completed comparison without having to enter all eight scenarios manually.
 
 The demo path does not introduce a separate calculation path. It loads the verified source data into the existing application state and continues to use the same Job model and calculation engine as the normal application flow. The manual input journey remains available and unchanged.
+
+## Using AI to add automated regression testing
+
+After the spreadsheet comparison, manual end-to-end verification and reviewer demo path were complete, I used ChatGPT to help convert the verified reference cases into an automated Vitest regression suite.
+
+The expected test values were not generated from the application under test. They came from the spreadsheet reference model that had already been used to verify the calculation engine and the complete manual input flow. This kept the spreadsheet as an independent reference rather than creating tests that simply reproduced the application's own outputs.
+
+ChatGPT helped structure tests for the eight reference calculation scenarios and the seven comparisons against the current situation. I reviewed the test inputs and expected values against the verified reference results and ran the suite locally.
+
+The final suite contains 15 passing tests covering key calculation outputs and comparison differences. I also ran the production build after adding the tests to confirm that the testing changes did not affect the application build.
+
+This added a repeatable regression check on top of the earlier manual verification. AI helped create the test implementation, while the independently verified spreadsheet values remained the source of truth for the expected results.
