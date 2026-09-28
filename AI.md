@@ -74,3 +74,18 @@ ChatGPT also helped me challenge the scope of the MVP. We discussed features suc
 I did not treat AI-generated suggestions as requirements automatically. I checked the proposed behaviour against the spreadsheet model, the TypeScript data structures and the calculation engine, and made the final product decisions where alternatives existed.
 
 Once these requirements were explicit, I could use them together with the existing data model to design the user flow and decide which information should be collected on each screen.
+
+## Using AI to build the current-situation input flow
+
+I used ChatGPT while translating the functional requirements and user-flow decisions into React screens and application state.
+
+Because React and TypeScript were still new to me, I used ChatGPT to help me understand how the screens should share state, how navigation between screens could be represented, and how the form draft types related to the source data that would later be passed to the calculation engine.
+
+I built the flow incrementally rather than asking AI to generate the complete final application in one step. I added and checked the Current Situation, Current Job, Current Pay & Schedule, Home & Travel and Current Commute & Costs stages progressively, running the application and testing the navigation after each part.
+
+During this process I used ChatGPT to help review the relationship between the UI and the existing data model. One example was the handling of work-related costs. An initial current-job screen used a single monthly work-cost field, but this was less flexible than the model already defined for job-specific costs. I decided to use the more general structure instead: multiple costs with their own frequencies, plus a separate route-fuel input for jobs involving additional driving during the workday.
+
+I did not rely on a successful code generation step as verification. I manually moved backwards and forwards through the screens, checked that entered state was preserved, tested the employed and not-working paths, added and removed work-related costs, enabled the conditional route-fuel fields, and repeatedly ran the TypeScript validation and production build.
+
+This incremental process helped me understand how React state, typed form data and screen navigation worked together before connecting the completed input flow to the calculation engine.
+

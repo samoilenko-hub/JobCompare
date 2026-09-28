@@ -116,3 +116,20 @@ I also explored a personalised comparison layer based on priorities, job prefere
 Finally, I used the requirements to define the MVP boundary. Manual job entry would be the reliable input path. Features such as vacancy parsing, AI extraction, maps integration, public transport calculations, accounts and backend storage were left as future extensions rather than adding complexity before the core comparison journey was working.
 
 With the functional behaviour defined more explicitly, the next step was to design the user flow: deciding how the required source inputs should be divided into screens and collected in a manageable sequence.
+
+## Designing and implementing the current-situation input flow
+
+With the functional requirements defined, I translated the source inputs into a sequence of smaller screens rather than putting the entire form on one page.
+
+The current-situation flow starts by establishing whether the user is employed, self-employed or not working. For a working baseline, the application then collects current-job information, pay and schedule, reusable home and vehicle information, and finally commute and work-related costs. A not-working baseline skips the current-job and pay screens because those inputs do not apply.
+
+I kept the form state in the React application while the user moves backwards and forwards between screens. This allowed me to separate data entry from calculation and to preserve entered values without introducing persistent storage.
+
+I also separated home and vehicle information from job-specific commute information. Home postcode and vehicle characteristics can potentially be reused across several candidate jobs, while commute distance, travel time and parking belong to a particular job.
+
+Work-related costs required a similar distinction. Rather than using a single monthly cost field, I allowed multiple costs with their own description, amount and frequency. I also kept additional driving performed during the workday separate from the normal home-to-work commute. Route fuel can therefore be calculated from route distance, fuel type and vehicle consumption without treating it as commuting.
+
+I implemented the flow incrementally and manually checked each stage in the browser. I tested forward and back navigation, preservation of entered form state, the different path for a not-working baseline, adding and removing work-related costs, and the conditional route-fuel inputs. I also ran the TypeScript validation and production build as the flow developed.
+
+At this stage I had a working input path for the user's current situation. The next step was to connect that source data to the existing calculation engine and present the calculated baseline in the Comparison view.
+
