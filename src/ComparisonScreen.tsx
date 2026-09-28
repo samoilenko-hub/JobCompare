@@ -15,6 +15,7 @@ type ComparisonScreenProps = {
   currentStatus: CurrentStatus
   userJobs: Job[]
   onAddJob: () => void
+  onRemoveJob: (jobId: string) => void
   onEditCurrent: () => void
 }
 
@@ -66,6 +67,7 @@ function ComparisonScreen({
   currentStatus,
   userJobs,
   onAddJob,
+  onRemoveJob,
   onEditCurrent,
 }: ComparisonScreenProps) {
   const notWorking = currentStatus === 'not_working'
@@ -123,6 +125,12 @@ function ComparisonScreen({
                   <div style={{ fontWeight: 'normal' }}>
                     {job.companyName || 'No data'}
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => onRemoveJob(job.id)}
+                  >
+                    Remove
+                  </button>
                 </th>
               ))}
             </tr>

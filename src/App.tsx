@@ -241,6 +241,9 @@ function App() {
         currentStatus={currentStatus}
         userJobs={userJobs}
         onAddJob={() => setScreen('add-job')}
+        onRemoveJob={(jobId) =>
+          setUserJobs(userJobs.filter((job) => job.id !== jobId))
+        }
         onEditCurrent={() => setScreen('current-situation')}
       />
     )
