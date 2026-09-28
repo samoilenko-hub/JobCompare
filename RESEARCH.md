@@ -181,3 +181,17 @@ I therefore added an Edit action to the Comparison view. The edit modal allows t
 Using Edit, I corrected the source inputs for the affected PKL, XYZ and One Stop scenarios and repeated the comparison. After those corrections, the outputs for the manually entered current situation and all seven candidate jobs matched the spreadsheet reference outputs at the displayed rounding precision.
 
 This completed an end-to-end verification of the MVP using the same manual input path available to a user. It also produced a verified set of source inputs that can now be reused as demo data without bypassing or changing the underlying calculation logic.
+
+## Adding verified demo data for reviewers
+
+After completing the end-to-end verification, I reused the verified source inputs as a demo dataset.
+
+The purpose of this was not to replace the normal user journey. A user can still enter their current situation, add candidate jobs and build a comparison manually. However, this project is also intended to be reviewed as a technical challenge, and requiring a reviewer to manually enter a current situation and seven candidate jobs would make it unnecessarily difficult to see the completed comparison experience.
+
+I therefore added a Load demo data option to the initial Current Situation screen. It provides a second, faster path through the application:
+
+Home → Load demo data → completed Current + 7 job comparison
+
+The demo dataset contains the same current situation and seven candidate jobs that were manually entered, corrected and checked during the end-to-end reference verification. It is therefore based on verified source inputs rather than a separate set of values created only for presentation.
+
+The demo loading logic populates the normal application state and then opens the Comparison view. The existing calculation engine remains unchanged, and the normal manual input journey remains available alongside the demo path.

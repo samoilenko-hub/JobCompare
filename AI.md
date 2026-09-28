@@ -129,3 +129,15 @@ I used ChatGPT to help implement an Edit modal that updates the source Job data 
 I then used the Edit functionality to correct the affected source inputs and repeated the verification. After the corrections, the manually entered current situation and all seven candidate jobs matched the spreadsheet reference outputs at the displayed rounding precision.
 
 This stage was another example of how I used AI as a development and investigation tool rather than as the source of truth. The spreadsheet remained the independent reference, the application data was entered and checked through the user-facing flow, and discrepancies were investigated before code or calculations were changed.
+
+## Using AI to add the reviewer demo path
+
+After completing the manual end-to-end verification, I used ChatGPT to help turn the verified source inputs into a reusable demo dataset.
+
+This was deliberately done after verification rather than before it. The current situation and seven candidate jobs had first been entered through the normal UI, discrepancies had been investigated and corrected, and the resulting outputs had been checked against the spreadsheet reference model.
+
+I temporarily exported the verified application state so that the exact current-situation inputs, home and travel inputs, and seven candidate jobs could be captured without manually reconstructing them. The temporary export code was then removed.
+
+ChatGPT helped me create a typed demo-data module and connect it to the existing React state. I added a Load demo data option to the initial Current Situation screen so that a reviewer can immediately inspect a completed comparison without having to enter all eight scenarios manually.
+
+The demo path does not introduce a separate calculation path. It loads the verified source data into the existing application state and continues to use the same Job model and calculation engine as the normal application flow. The manual input journey remains available and unchanged.

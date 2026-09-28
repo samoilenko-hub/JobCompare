@@ -4,12 +4,14 @@ type CurrentSituationScreenProps = {
   status: CurrentStatus | ''
   onStatusChange: (status: CurrentStatus) => void
   onContinue: () => void
+  onLoadDemoData: () => void
 }
 
 function CurrentSituationScreen({
   status,
   onStatusChange,
   onContinue,
+  onLoadDemoData,
 }: CurrentSituationScreenProps) {
   return (
     <main>
@@ -62,6 +64,12 @@ function CurrentSituationScreen({
         onClick={onContinue}
       >
         Continue
+      </button>
+
+      <p>Or explore a completed example:</p>
+
+      <button type="button" onClick={onLoadDemoData}>
+        Load demo data
       </button>
     </main>
   )

@@ -13,6 +13,12 @@ import { calculateJob } from './calculations/calculateJob_v3'
 import { defaultRules } from './rules/defaultRules_v3'
 import type { JobDraft, CurrentJobDraft } from './types/formDraft_v3'
 import type { Job } from './types/job_v3'
+import {
+  demoCurrentStatus,
+  demoCurrentJobDraft,
+  demoHomeTravelDraft,
+  demoJobs,
+} from './testData/demoData_v3'
 
 type Screen =
   | 'current-situation'
@@ -115,11 +121,20 @@ function App() {
       ? null
       : calculateJob(currentJob, defaultRules)
 
+  const loadDemoData = () => {
+    setCurrentStatus(demoCurrentStatus)
+    setCurrentJobDraft(structuredClone(demoCurrentJobDraft))
+    setHomeTravelDraft(structuredClone(demoHomeTravelDraft))
+    setUserJobs(structuredClone(demoJobs))
+    setScreen('comparison')
+  }
+
   if (screen === 'current-situation') {
     return (
       <CurrentSituationScreen
         status={currentStatus}
         onStatusChange={setCurrentStatus}
+        onLoadDemoData={loadDemoData}
         onContinue={() => {
           setScreen(
             currentStatus === 'not_working'
