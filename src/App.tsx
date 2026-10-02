@@ -217,6 +217,7 @@ function App() {
   if (screen === 'home-travel') {
     return (
       <HomeTravelScreen
+        currentStatus={currentStatus}
         homeTravelDraft={homeTravelDraft}
         setHomeTravelDraft={setHomeTravelDraft}
         onBack={() =>

@@ -5,6 +5,7 @@ type HomeTravelScreenProps = {
   setHomeTravelDraft: (draft: HomeTravelDraft) => void
   onBack: () => void
   onContinue: () => void
+  currentStatus: 'employed' | 'self_employed' | 'not_working' | ''
 }
 
 function HomeTravelScreen({
@@ -12,6 +13,7 @@ function HomeTravelScreen({
   setHomeTravelDraft,
   onBack,
   onContinue,
+  currentStatus,
 }: HomeTravelScreenProps) {
   return (
     <main>
@@ -46,7 +48,9 @@ function HomeTravelScreen({
               })
             }
           />
-          I use a car for commuting
+          {currentStatus === 'not_working'
+            ? 'I am willing to use a car for commuting'
+            : 'I use a car for commuting'}
         </label>
       </div>
 

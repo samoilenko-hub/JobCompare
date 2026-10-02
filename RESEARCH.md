@@ -227,3 +227,15 @@ For time differences the interpretation is reversed:
 - reduced committed time is highlighted as a positive change.
 
 This reinforces the main purpose of JobCompare: comparing job options is not only about headline pay, but also about the amount of time and effort required to achieve that outcome.
+
+## Making work-related costs visible
+
+After reviewing the completed comparison screen, I identified another usability issue: work-related costs were already included in the Real Net calculation, but the total cost itself was not visible in the main comparison table.
+
+This could make it difficult to understand why two jobs with similar gross pay produced different Real Net results, particularly where commuting costs, parking or other work-related expenses were significant.
+
+I therefore added a Commute & work costs row between Gross pay and Real Net. It displays the monthly total already produced by the calculation engine, including commute fuel, parking and additional work-related costs where applicable.
+
+No calculation logic was changed. The new row exposes an existing calculated value in the comparison UI. Costs greater than zero are displayed as negative values and highlighted in red to make their effect on take-home income easier to understand.
+
+The production build was run successfully after the change.

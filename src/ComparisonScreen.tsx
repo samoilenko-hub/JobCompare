@@ -910,6 +910,52 @@ function ComparisonScreen({
             </tr>
 
             <tr>
+              <th>Commute &amp; work costs</th>
+              <td>
+                <strong
+                  style={
+                    !notWorking &&
+                    currentResult?.costs.totalWorkCostsMonthly != null &&
+                    currentResult.costs.totalWorkCostsMonthly > 0
+                      ? { color: 'red' }
+                      : undefined
+                  }
+                >
+                  {notWorking
+                    ? money(0)
+                    : currentResult?.costs.totalWorkCostsMonthly == null
+                      ? 'No data'
+                      : currentResult.costs.totalWorkCostsMonthly > 0
+                        ? `−${money(currentResult.costs.totalWorkCostsMonthly)}`
+                        : money(0)}
+                </strong>
+                <div>/ month</div>
+              </td>
+
+              {candidateResults.map(({ job, result }) => {
+                const costs = result.costs.totalWorkCostsMonthly
+                return (
+                  <td key={job.id}>
+                    <strong
+                      style={
+                        costs !== null && costs > 0
+                          ? { color: 'red' }
+                          : undefined
+                      }
+                    >
+                      {costs === null
+                        ? 'No data'
+                        : costs > 0
+                          ? `−${money(costs)}`
+                          : money(0)}
+                    </strong>
+                    <div>/ month</div>
+                  </td>
+                )
+              })}
+            </tr>
+
+            <tr>
               <th>Real net</th>
               <td>
                 <strong>
