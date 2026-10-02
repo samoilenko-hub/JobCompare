@@ -239,3 +239,9 @@ I therefore added a Commute & work costs row between Gross pay and Real Net. It 
 No calculation logic was changed. The new row exposes an existing calculated value in the comparison UI. Costs greater than zero are displayed as negative values and highlighted in red to make their effect on take-home income easier to understand.
 
 The production build was run successfully after the change.
+
+## Making advertised pay easier to compare
+
+Job adverts present pay in different ways, such as hourly, daily or annual rates. I added the original advertised pay alongside the calculated effective net hourly rate so users can compare the headline figure with the real value of the job after work-related costs and time.
+
+I also added the difference in effective net hourly rate versus the current situation. This uses existing calculation results and does not change the calculation engine.

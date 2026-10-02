@@ -63,7 +63,13 @@ const timeDifferenceColour = (value: number | null) => {
   return value > 0 ? 'red' : 'green'
 }
 
+const advertisedPay = (job: Job) => {
+  if (job.pay.kind === 'employed') {
+    return `${money(job.pay.amount)} / ${job.pay.basis}`
+  }
 
+  return `${money(job.pay.revenueAmount)} / ${job.pay.revenueFrequency}`
+}
 
 function contractLabel(job: Job) {
   const contract = job.contract
@@ -797,7 +803,20 @@ function ComparisonScreen({
       </button>
 
       <div style={{ overflowX: 'auto' }}>
+        <style>{`
+          .comparison-table th:not(:first-child),
+          .comparison-table td:not(:first-child) {
+            text-align: center;
+          }
+
+          .comparison-table th:first-child,
+          .comparison-table td:first-child {
+            text-align: left;
+          }
+        `}</style>
+
         <table
+          className="comparison-table"
           border={1}
           cellPadding={12}
           style={{ borderCollapse: 'collapse' }}
@@ -1058,26 +1077,84 @@ function ComparisonScreen({
             </tr>
 
             <tr>
-              <th>Effective net</th>
+              <th>Advertised pay</th>
               <td>
                 <strong>
+                  {notWorking || !currentJob
+                    ? 'No data'
+                    : advertisedPay(currentJob)}
+                </strong>
+              </td>
+
+              {candidateResults.map(({ job }) => (
+                <td key={job.id}>
+                  <strong>{advertisedPay(job)}</strong>
+                </td>
+              ))}
+            </tr>
+
+            <tr>
+              <th
+                style={{
+                  fontWeight: 'bold',
+                  borderTop: '2px solid #6b7280',
+                  borderBottom: '2px solid #6b7280',
+                }}
+              >
+                Effective net
+              </th>
+              <td
+                style={{
+                  borderTop: '2px solid #6b7280',
+                  borderBottom: '2px solid #6b7280',
+                }}
+              >
+                <strong style={{ fontSize: '1.15em' }}>
                   {notWorking ||
                   currentResult?.effectiveNetPerHour == null
                     ? 'No data'
                     : `${money(currentResult.effectiveNetPerHour)} / hour`}
                 </strong>
-                <div>Baseline</div>
+                <div style={{ fontSize: '0.8em' }}>Baseline</div>
               </td>
 
-              {candidateResults.map(({ job, result }) => (
-                <td key={job.id}>
-                  <strong>
-                    {result.effectiveNetPerHour == null
-                      ? 'No data'
-                      : `${money(result.effectiveNetPerHour)} / hour`}
-                  </strong>
-                </td>
-              ))}
+              {candidateResults.map(({ job, result }) => {
+                const difference =
+                  notWorking ||
+                  currentResult?.effectiveNetPerHour == null ||
+                  result.effectiveNetPerHour == null
+                    ? null
+                    : result.effectiveNetPerHour -
+                      currentResult.effectiveNetPerHour
+
+                return (
+                  <td
+                    key={job.id}
+                    style={{
+                      borderTop: '2px solid #6b7280',
+                      borderBottom: '2px solid #6b7280',
+                    }}
+                  >
+                    <strong style={{ fontSize: '1.15em' }}>
+                      {result.effectiveNetPerHour == null
+                        ? 'No data'
+                        : `${money(result.effectiveNetPerHour)} / hour`}
+                    </strong>
+
+                    {difference !== null && (
+                      <div
+                        style={{
+                          fontSize: '0.8em',
+                          color: moneyDifferenceColour(difference),
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {signedMoney(difference)} / hour vs current
+                      </div>
+                    )}
+                  </td>
+                )
+              })}
             </tr>
 
             <tr>
