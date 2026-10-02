@@ -245,3 +245,13 @@ The production build was run successfully after the change.
 Job adverts present pay in different ways, such as hourly, daily or annual rates. I added the original advertised pay alongside the calculated effective net hourly rate so users can compare the headline figure with the real value of the job after work-related costs and time.
 
 I also added the difference in effective net hourly rate versus the current situation. This uses existing calculation results and does not change the calculation engine.
+
+## Improving comparison table readability
+
+As the number of job opportunities increased, the comparison table became harder to scan horizontally. I refined the presentation without changing the calculation engine.
+
+I moved the comparison-specific styling into a separate CSS file, reduced the visual weight of the table grid, and gave key results such as Real Net clearer visual emphasis.
+
+I also added interactive row highlighting. Users can click any comparison metric to highlight that row across the full table, including the fixed Current Situation column. This makes it easier to follow one metric when comparing several jobs horizontally.
+
+These changes are presentation and usability improvements only; the underlying calculation logic remains unchanged.

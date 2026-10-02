@@ -10,6 +10,7 @@ import type {
 import type { CalculationResult } from './types/results_v3'
 import { calculateJob } from './calculations/calculateJob_v3'
 import { defaultRules } from './rules/defaultRules_v3'
+import './ComparisonScreen.css'
 
 type CurrentStatus =
   | 'employed'
@@ -772,6 +773,14 @@ function ComparisonScreen({
   onEditCurrent,
 }: ComparisonScreenProps) {
   const [editingJob, setEditingJob] = useState<Job | null>(null)
+  const [selectedRow, setSelectedRow] = useState<string | null>(null)
+
+  const selectableRow = (row: string) => ({
+    className: selectedRow === row ? 'comparison-row-selected' : 'comparison-row',
+    onClick: () =>
+      setSelectedRow((current) => (current === row ? null : row)),
+  })
+
   const notWorking = currentStatus === 'not_working'
 
   const candidateResults = userJobs.map((job) => ({
@@ -803,24 +812,11 @@ function ComparisonScreen({
       </button>
 
       <div style={{ overflowX: 'auto' }}>
-        <style>{`
-          .comparison-table th:not(:first-child),
-          .comparison-table td:not(:first-child) {
-            text-align: center;
-          }
 
-          .comparison-table th:first-child,
-          .comparison-table td:first-child {
-            text-align: left;
-          }
-        `}</style>
 
-        <table
-          className="comparison-table"
-          border={1}
-          cellPadding={12}
-          style={{ borderCollapse: 'collapse' }}
-        >
+        <div className="comparison-table-wrapper">
+          <div className="comparison-table-scroll">
+            <table className="comparison-table">
           <thead>
             <tr>
               <th>Compare</th>
@@ -860,7 +856,7 @@ function ComparisonScreen({
           </thead>
 
           <tbody>
-            <tr>
+            <tr {...selectableRow('location')}>
               <th>Location</th>
               <td>
                 {notWorking
@@ -875,7 +871,7 @@ function ComparisonScreen({
               ))}
             </tr>
 
-            <tr>
+            <tr {...selectableRow('employment')}>
               <th>Employment</th>
               <td>
                 {notWorking
@@ -894,7 +890,7 @@ function ComparisonScreen({
               ))}
             </tr>
 
-            <tr>
+            <tr {...selectableRow('contract')}>
               <th>Contract</th>
               <td>
                 {notWorking || !currentJob
@@ -907,10 +903,10 @@ function ComparisonScreen({
               ))}
             </tr>
 
-            <tr>
+            <tr {...selectableRow('gross-pay')}>
               <th>Gross pay</th>
               <td>
-                <strong>
+                <strong className="real-net-value">
                   {money(
                     notWorking
                       ? 0
@@ -928,7 +924,7 @@ function ComparisonScreen({
               ))}
             </tr>
 
-            <tr>
+            <tr {...selectableRow('work-costs')}>
               <th>Commute &amp; work costs</th>
               <td>
                 <strong
@@ -974,7 +970,14 @@ function ComparisonScreen({
               })}
             </tr>
 
-            <tr>
+            <tr
+              {...selectableRow('real-net')}
+              className={`real-net-row ${
+                selectedRow === 'real-net'
+                  ? 'comparison-row-selected'
+                  : 'comparison-row'
+              }`}
+            >
               <th>Real net</th>
               <td>
                 <strong>
@@ -997,12 +1000,15 @@ function ComparisonScreen({
 
                 return (
                   <td key={job.id}>
-                    <strong>{money(result.realNetMonthly)}</strong>
+                    <strong className="real-net-value">
+                      {money(result.realNetMonthly)}
+                    </strong>
                     <div>/ month</div>
                     <div
                       style={{
                         color: moneyDifferenceColour(difference),
                         fontWeight: 'bold',
+                        fontSize: '0.8em',
                       }}
                     >
                       {signedMoney(difference)} vs current
@@ -1012,33 +1018,9 @@ function ComparisonScreen({
               })}
             </tr>
 
-            <tr>
-              <th>What changes</th>
-              <td>Baseline</td>
+            
 
-              {candidateResults.map(({ job, result }) => {
-                const difference =
-                  baselineRealNet === null ||
-                  result.realNetMonthly === null
-                    ? null
-                    : result.realNetMonthly - baselineRealNet
-
-                return (
-                  <td key={job.id}>
-                    <span
-                      style={{
-                        color: moneyDifferenceColour(difference),
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      {signedMoney(difference)} / month
-                    </span>
-                  </td>
-                )
-              })}
-            </tr>
-
-            <tr>
+            <tr {...selectableRow('total-time')}>
               <th>Total time</th>
               <td>
                 <strong>
@@ -1067,6 +1049,7 @@ function ComparisonScreen({
                       style={{
                         color: timeDifferenceColour(difference),
                         fontWeight: 'bold',
+                        fontSize: '0.8em',
                       }}
                     >
                       {signedHours(difference)} vs current
@@ -1076,7 +1059,7 @@ function ComparisonScreen({
               })}
             </tr>
 
-            <tr>
+            <tr {...selectableRow('advertised-pay')}>
               <th>Advertised pay</th>
               <td>
                 <strong>
@@ -1093,7 +1076,7 @@ function ComparisonScreen({
               ))}
             </tr>
 
-            <tr>
+            <tr {...selectableRow('effective-net')}>
               <th
                 style={{
                   fontWeight: 'bold',
@@ -1157,7 +1140,7 @@ function ComparisonScreen({
               })}
             </tr>
 
-            <tr>
+            <tr {...selectableRow('work-pattern')}>
               <th>Work pattern</th>
               <td>
                 {notWorking
@@ -1173,6 +1156,9 @@ function ComparisonScreen({
             </tr>
           </tbody>
         </table>
+            <div className="comparison-scroll-spacer" />
+          </div>
+        </div>
       </div>
 
       {editingJob && (
